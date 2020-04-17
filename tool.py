@@ -2,7 +2,7 @@ import os
 import click
 from hacktools import common, nds
 
-version = "0.2.2"
+version = "0.2.3"
 romfile = "data/mamoru.nds"
 rompatch = "data/mamoru_patched.nds"
 infolder = "data/extract/"
