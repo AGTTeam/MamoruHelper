@@ -2,13 +2,16 @@ import os
 import click
 from hacktools import common, nds
 
-version = "0.2.1"
+version = "0.2.2"
 romfile = "data/mamoru.nds"
 rompatch = "data/mamoru_patched.nds"
 infolder = "data/extract/"
 replacefolder = "data/replace/"
 outfolder = "data/repack/"
-transfolder = "data/MamoruTrans/NDS_UNPACK"
+mtransbin = "data/MamoruTrans/NDS_UNPACK/arm9.bin"
+mtransbinout = "data/repack/arm9.bin"
+mtransparm = "data/MamoruTrans/NDS_UNPACK/data/Proj60.dat"
+mtransparmout = "data/repack/data/Proj60.dat"
 bannerfile = "data/repack/banner.bin"
 patchfile = "data/patch.xdelta"
 
@@ -27,11 +30,13 @@ def extract(rom, img):
 
 @common.cli.command()
 @click.option("--no-rom", is_flag=True, default=False)
+@click.option("--mtrans", is_flag=True, default=False)
 @click.option("--img", is_flag=True, default=False)
-def repack(no_rom, img):
-    all = not img
-    common.clearFolder(outfolder)
-    common.copyFolder(transfolder, outfolder)
+def repack(no_rom, mtrans, img):
+    all = not mtrans and not img
+    if all or mtrans:
+        common.copyFile(mtransbin, mtransbinout)
+        common.copyFile(mtransparm, mtransparmout)
     if all or img:
         import repack_img
         repack_img.run()
