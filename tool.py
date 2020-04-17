@@ -2,7 +2,7 @@ import os
 import click
 from hacktools import common, nds
 
-version = "0.2.0"
+version = "0.2.1"
 romfile = "data/mamoru.nds"
 rompatch = "data/mamoru_patched.nds"
 infolder = "data/extract/"
@@ -33,8 +33,8 @@ def repack(no_rom, img):
     common.clearFolder(outfolder)
     common.copyFolder(transfolder, outfolder)
     if all or img:
-        import extract_img
-        extract_img.run()
+        import repack_img
+        repack_img.run()
     if not no_rom:
         if os.path.isdir(replacefolder):
             common.mergeFolder(replacefolder, outfolder)

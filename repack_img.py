@@ -5,8 +5,8 @@ from hacktools import common, nitro
 
 def run():
     workfolder = "data/work_IMG/"
-    infolder = "data/extract/"
-    outfolder = "data/repack/"
+    infolder = "data/extract/data/"
+    outfolder = "data/repack/data/"
 
     common.logMessage("Repacking IMG from", workfolder, "...")
     files = common.getFiles(infolder, [".NCGR", ".nbfs"])
@@ -20,15 +20,7 @@ def run():
         if not os.path.isfile(workfolder + pngfile):
             pngfile = file.replace(extension, ".png")
             if not os.path.isfile(workfolder + pngfile):
-                pngfile = ""
-        if pngfile == "":
-            if os.path.isfile(outfolder + file):
-                os.remove(outfolder + file)
-            if os.path.isfile(outfolder + mapfile):
-                os.remove(outfolder + mapfile)
-            if os.path.isfile(outfolder + cellfile):
-                os.remove(outfolder + cellfile)
-            continue
+                continue
         common.makeFolders(outfolder + os.path.dirname(file))
         common.copyFile(infolder + file, outfolder + file)
         if map is None and cell is None:
