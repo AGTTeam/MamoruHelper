@@ -30,12 +30,12 @@ def extract(rom, img):
 @click.option("--img", is_flag=True, default=False)
 def repack(no_rom, img):
     all = not img
+    common.clearFolder(outfolder)
+    common.copyFolder(transfolder, outfolder)
     if all or img:
         import extract_img
         extract_img.run()
     if not no_rom:
-        common.clearFolder(outfolder)
-        common.copyFolder(transfolder, outfolder)
         if os.path.isdir(replacefolder):
             common.mergeFolder(replacefolder, outfolder)
         common.armipsPatch("bin_patch.asm")

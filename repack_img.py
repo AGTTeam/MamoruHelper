@@ -6,7 +6,7 @@ from hacktools import common, nitro
 def run():
     workfolder = "data/work_IMG/"
     infolder = "data/extract/"
-    outfolder = "data/repack_IMG/"
+    outfolder = "data/repack/"
 
     common.logMessage("Repacking IMG from", workfolder, "...")
     files = common.getFiles(infolder, [".NCGR", ".nbfs"])
