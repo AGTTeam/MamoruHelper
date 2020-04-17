@@ -4,15 +4,10 @@ from hacktools import nitro
 
 def readImage(infolder, file, extension):
     cell = None
-    if extension == ".NBFC":
-        palettefile = file.replace(extension, ".NBFP")
-        mapfile = file.replace(extension, ".NBFS")
-        cellfile = ""
-    elif extension == ".NTFT":
-        palettefile = file.replace(extension, ".NTFP")
+    if extension == ".nbfs":
+        palettefile = file.replace(extension, ".nbfp")
         mapfile = ""
         cellfile = ""
-        map = None
     elif extension == ".NCGR":
         palettefile = file.replace(extension, ".NCLR")
         if not os.path.isfile(infolder + palettefile) and "OBJACT_" in palettefile:
@@ -20,12 +15,8 @@ def readImage(infolder, file, extension):
         mapfile = file.replace(extension, ".NSCR")
         cellfile = file.replace(extension, ".NCER")
     # Read the image
-    if extension == ".NBFC":
-        palettes, image, map = nitro.readNitroGraphicNBFC(infolder + palettefile, infolder + file, infolder + mapfile)
-        width = image.width
-        height = image.height
-    elif extension == ".NTFT":
-        palettes, image = nitro.readNitroGraphicNTFT(infolder + palettefile, infolder + file)
+    if extension == ".nbfs":
+        palettes, image, map = nitro.readNitroGraphicNBFC(infolder + palettefile, infolder + file, infolder + mapfile, True)
         width = image.width
         height = image.height
     elif extension == ".NCGR":

@@ -2,7 +2,7 @@ import os
 import click
 from hacktools import common, nds
 
-version = "0.1.0"
+version = "0.2.0"
 romfile = "data/mamoru.nds"
 rompatch = "data/mamoru_patched.nds"
 infolder = "data/extract/"
@@ -17,15 +17,22 @@ patchfile = "data/patch.xdelta"
 @click.option("--rom", is_flag=True, default=False)
 @click.option("--img", is_flag=True, default=False)
 def extract(rom, img):
-    nds.extractRom(romfile, infolder, outfolder)
-    if img:
+    all = not rom and not img
+    if all or rom:
+        nds.extractRom(romfile, infolder, outfolder)
+    if all or img:
         import extract_img
         extract_img.run()
 
 
 @common.cli.command()
 @click.option("--no-rom", is_flag=True, default=False)
-def repack(no_rom):
+@click.option("--img", is_flag=True, default=False)
+def repack(no_rom, img):
+    all = not img
+    if all or img:
+        import extract_img
+        extract_img.run()
     if not no_rom:
         common.clearFolder(outfolder)
         common.copyFolder(transfolder, outfolder)

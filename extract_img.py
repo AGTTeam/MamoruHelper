@@ -9,7 +9,7 @@ def run():
     common.makeFolder(outfolder)
 
     common.logMessage("Extracting IMG to", outfolder, "...")
-    files = common.getFiles(infolder, [".NCGR", ".NBFC", ".NTFT"])
+    files = common.getFiles(infolder, [".NCGR", ".nbfs"])
     for file in common.showProgress(files):
         common.logDebug("Processing", file, "...")
         extension = os.path.splitext(file)[1]
