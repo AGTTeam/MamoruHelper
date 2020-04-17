@@ -1,4 +1,4 @@
-.nds
+﻿.nds
 
 .open "data/repack/arm9.bin",0x02000000
 ;Fix the game to run on no$gba
@@ -22,6 +22,6 @@
 ;Fix "Liruka Village" not being centered
 .org 0x020f7268
   ;Original: .sjis "　　　　　　%s"
-  .sjis "　　　　　%s　"
-
+  .sjis "　　　　 %s　"
 .close
+
