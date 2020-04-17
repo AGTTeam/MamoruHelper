@@ -27,8 +27,8 @@ def run():
             nitro.writeNCGR(outfolder + file, image, workfolder + pngfile, palettes, width, height)
         elif cell is None:
             common.copyFile(infolder + mapfile, outfolder + mapfile)
-            trasptile = "SN/CMN" in file
-            nitro.writeMappedNSCR(outfolder + file, outfolder + mapfile, image, map, workfolder + pngfile, palettes, width, height, trasptile)
+            transptile = "SN/CMN" in file
+            nitro.writeMappedNSCR(outfolder + file, outfolder + mapfile, image, map, workfolder + pngfile, palettes, width, height, transptile)
         else:
             common.copyFile(infolder + cellfile, outfolder + cellfile)
             nitro.writeNCER(outfolder + file, outfolder + cellfile, image, cell, workfolder + pngfile, palettes, width, height)
