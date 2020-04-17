@@ -2,8 +2,6 @@ __pycache__
 
 build
 data*
-MamoruTrans*
-src
 *.log
 *.exe
 notes.md
