@@ -1,6 +1,7 @@
 ﻿.nds
 
 .open "data/repack/arm9.bin",0x02000000
+;Using free space from 0x020E5614 to 0x020E5907 for custom code
 ;Fix the game to run on no$gba
 ;More info: https://github.com/Arisotura/melonDS/issues/559
 .org 0x020e5614
@@ -25,8 +26,16 @@ NAMEPLATE_VWF:
   ldr r0,=FONT_LC08
   add r0,r0,r9
   sub r0,r0,0x20
+  ;Check what font we're using and add 0x5E for LC10
+  ldr r2,[r13,0x2c]
+  cmp r2,0xa
+  addeq r0,r0,0x5E
+  ;Set r0 to the character spacing
   ldrb r0,[r0]
   strb r0,[r13,0x28]
+  ;Restore cmp register
+  mov r0,0x0
+  cmp r0,0x0
   b NAMEPLATE_VWF_RETURN
   .pool
 
@@ -36,10 +45,22 @@ NAMEPLATE_CENTER:
   ldr r0,=FONT_LC08
   add r0,r0,r5
   sub r0,r0,0x20
+  ;Check what font we're using and add 0x5E for LC10
+  ldr r5,[r13,0x2c]
+  cmp r5,0xa
+  addeq r0,r0,0x5E
+  ;Set the width
   ldrb r5,[r0]
   mov r0,0x0
   b NAMEPLATE_CENTER_RETURN
   .pool
+
+;Set the default keybaord as Alphabet
+DEFAULT_KEYBOARD:
+  mov r2,0x2
+  str r2,[r10,0x3e0]
+  mov r2,0x0
+  b DEFAULT_KEYBOARD_RETURN
 
 ;Import the font data
 FONT_LC08:
@@ -62,5 +83,9 @@ FONT_LC08:
   ;Original: cmp r0,0x0
   b NAMEPLATE_VWF
   NAMEPLATE_VWF_RETURN:
+.org 0x020a51fc
+  ;Original: str r2,[r10,0x3e0]
+  b DEFAULT_KEYBOARD
+  DEFAULT_KEYBOARD_RETURN:
 
 .close

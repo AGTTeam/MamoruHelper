@@ -1,8 +1,9 @@
 import os
 import click
-from hacktools import common, nds
+import game
+from hacktools import common, nds, nitro
 
-version = "0.3.0"
+version = "0.3.2"
 romfile = "data/mamoru.nds"
 rompatch = "data/mamoru_patched.nds"
 infolder = "data/extract/"
@@ -24,8 +25,7 @@ def extract(rom, img):
     if all or rom:
         nds.extractRom(romfile, infolder, outfolder)
     if all or img:
-        import extract_img
-        extract_img.run()
+        nitro.extractIMG("data/extract/data/", "data/out_IMG/", [".NCGR", ".nbfs"], game.readImage)
 
 
 @common.cli.command()
@@ -37,13 +37,18 @@ def repack(no_rom, mtrans, img):
     if all or mtrans:
         common.copyFile(mtransbin, mtransbinout)
         common.copyFile(mtransparm, mtransparmout)
+        fontfiles = []
+        fontfile = "data/replace/data/FONT/LC08.NFTR"
+        fontfiles.append(fontfile if os.path.isfile(fontfile) else fontfile.replace("replace/", "extract/"))
+        fontfile = "data/replace/data/FONT/LC10.NFTR"
+        fontfiles.append(fontfile if os.path.isfile(fontfile) else fontfile.replace("replace/", "extract/"))
+        nitro.extractFontData(fontfiles, "data/font_data.bin")
+        common.armipsPatch("bin_patch.asm")
     if all or img:
-        import repack_img
-        repack_img.run()
+        nitro.repackIMG("data/work_IMG/", "data/extract/data/", "data/repack/data/", [".NCGR", ".nbfs"], game.readImage, game.writeImage)
     if not no_rom:
         if os.path.isdir(replacefolder):
             common.mergeFolder(replacefolder, outfolder)
-        common.armipsPatch("bin_patch.asm")
         nds.editBannerTitle(bannerfile, "I will protect you.\nIDEA FACTORY")
         nds.repackRom(romfile, rompatch, outfolder, patchfile)
 
