@@ -22,3 +22,8 @@ def readImage(infolder, file, extension):
     elif extension == ".NCGR":
         palettes, image, map, cell, width, height = nitro.readNitroGraphic(infolder + palettefile, infolder + file, infolder + mapfile, infolder + cellfile)
     return palettes, image, map, cell, width, height, mapfile, cellfile
+
+
+def writeImage(file, image, map, cell, width, height):
+    transptile = "SN/CMN" in file
+    return image, map, cell, width, height, transptile
