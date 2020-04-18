@@ -26,8 +26,16 @@ NAMEPLATE_VWF:
   ldr r0,=FONT_LC08
   add r0,r0,r9
   sub r0,r0,0x20
+  ;Check what font we're using and add 0x5E for LC10
+  ldr r2,[r13,0x2c]
+  cmp r2,0xa
+  addeq r0,r0,0x5E
+  ;Set r0 to the character spacing
   ldrb r0,[r0]
   strb r0,[r13,0x28]
+  ;Restore cmp register
+  mov r0,0x0
+  cmp r0,0x0
   b NAMEPLATE_VWF_RETURN
   .pool
 
@@ -37,6 +45,11 @@ NAMEPLATE_CENTER:
   ldr r0,=FONT_LC08
   add r0,r0,r5
   sub r0,r0,0x20
+  ;Check what font we're using and add 0x5E for LC10
+  ldr r5,[r13,0x2c]
+  cmp r5,0xa
+  addeq r0,r0,0x5E
+  ;Set the width
   ldrb r5,[r0]
   mov r0,0x0
   b NAMEPLATE_CENTER_RETURN
