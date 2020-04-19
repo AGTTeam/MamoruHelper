@@ -29,7 +29,7 @@ NAMEPLATE_VWF:
   ;Check what font we're using and add 0x5E for LC10
   ldr r2,[r13,0x2c]
   cmp r2,0xa
-  addeq r0,r0,0x5E
+  addge r0,r0,0x5E
   ;Set r0 to the character spacing
   ldrb r0,[r0]
   strb r0,[r13,0x28]
@@ -48,7 +48,7 @@ NAMEPLATE_CENTER:
   ;Check what font we're using and add 0x5E for LC10
   ldr r5,[r13,0x2c]
   cmp r5,0xa
-  addeq r0,r0,0x5E
+  addge r0,r0,0x5E
   ;Set the width
   ldrb r5,[r0]
   mov r0,0x0
