@@ -62,6 +62,14 @@ DEFAULT_KEYBOARD:
   mov r2,0x0
   b DEFAULT_KEYBOARD_RETURN
 
+;Fit "Permanent Skill" in menu header
+PERMANENT_SKILL:
+  ldrb r2,[r7,0x4]
+  cmp r2,0x50
+  mov r2,0x20
+  addeq r2,r2,0x02
+  b PERMANENT_SKILL_RETURN
+
 ;Import the font data
 FONT_LC08:
   .import "data/font_data.bin"
@@ -70,6 +78,16 @@ FONT_LC08:
 .org 0x020f7268
   ;Original: .sjis "　　　　　　%s"
   .sjis "　　　　 %s　"
+
+;Extend "Permanent Skill" menu header
+.org 0x2085438
+  ;Original: mov r1,0x8
+  mov r1,0x0c
+;Move the text a little to the right
+.org 0x020858b4
+  ;Original: mov r2,0x20
+  b PERMANENT_SKILL
+  PERMANENT_SKILL_RETURN:
 
 ;Inject custom code
 .org 0x020108c0
