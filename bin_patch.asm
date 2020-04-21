@@ -67,7 +67,7 @@ PERMANENT_SKILL:
   ldrb r2,[r7,0x4]
   cmp r2,0x50
   mov r2,0x20
-  addeq r2,r2,0x02
+  addeq r2,r2,0x04
   b PERMANENT_SKILL_RETURN
 
 ;Import the font data
