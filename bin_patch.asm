@@ -88,7 +88,7 @@ ITEM_DESCR:
   add r1,r1,0x1
   b ITEM_DESCR_LOOP
   ITEM_DESCR_LB:
-  mov r10,0x18
+  mov r10,0x14
   ITEM_DESCR_END:
   mov r1,r4
   b ITEM_DESCR_RETURN
