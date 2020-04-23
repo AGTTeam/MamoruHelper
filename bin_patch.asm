@@ -70,6 +70,29 @@ PERMANENT_SKILL:
   addeq r2,r2,0x04
   b PERMANENT_SKILL_RETURN
 
+;Move the 2nd item description line down if there's a line break in the first one
+;r7 = number of the line
+;r10 = line spacing, default is 0x0c
+;r12 = pointer to the string
+ITEM_DESCR:
+  cmp r7,0x00
+  bne ITEM_DESCR_END
+  mov r10,0x0c
+  mov r1,0x0
+  ITEM_DESCR_LOOP:
+  ldrb r2,[r12,r1]
+  cmp r2,0x0a
+  beq ITEM_DESCR_LB
+  cmp r2,0x0
+  beq ITEM_DESCR_END
+  add r1,r1,0x1
+  b ITEM_DESCR_LOOP
+  ITEM_DESCR_LB:
+  mov r10,0x18
+  ITEM_DESCR_END:
+  mov r1,r4
+  b ITEM_DESCR_RETURN
+
 ;Import the font data
 FONT_LC08:
   .import "data/font_data.bin"
@@ -105,5 +128,9 @@ FONT_LC08:
   ;Original: str r2,[r10,0x3e0]
   b DEFAULT_KEYBOARD
   DEFAULT_KEYBOARD_RETURN:
+.org 0x020784d8
+  ;Original: mov r1,r4
+  b ITEM_DESCR
+  ITEM_DESCR_RETURN:
 
 .close
