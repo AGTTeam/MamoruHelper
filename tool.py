@@ -3,7 +3,7 @@ import click
 import game
 from hacktools import common, nds, nitro
 
-version = "0.5.0"
+version = "0.5.1"
 romfile = "data/mamoru.nds"
 rompatch = "data/mamoru_patched.nds"
 infolder = "data/extract/"
