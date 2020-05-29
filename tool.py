@@ -3,7 +3,7 @@ import click
 import game
 from hacktools import common, nds, nitro
 
-version = "0.5.1"
+version = "0.5.2"
 romfile = "data/mamoru.nds"
 rompatch = "data/mamoru_patched.nds"
 infolder = "data/extract/"
@@ -51,6 +51,12 @@ def repack(no_rom, mtrans, img):
             common.mergeFolder(replacefolder, outfolder)
         nds.editBannerTitle(bannerfile, "I will protect you.\nIDEA FACTORY")
         nds.repackRom(romfile, rompatch, outfolder, patchfile)
+
+
+@common.cli.command()
+def patchdump():
+    patchfile = "data/bad_to_good.xdelta"
+    common.xdeltaPatch(patchfile, romfile.replace(".nds", "_bad.nds"), romfile)
 
 
 if __name__ == "__main__":
