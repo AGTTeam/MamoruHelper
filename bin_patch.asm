@@ -5,6 +5,7 @@
 ;Fix the game to run on no$gba
 ;More info: https://github.com/Arisotura/melonDS/issues/559
 .org 0x020e5614
+.area 0x1A0
   MEMSET_HACK:
   ;Original jump
   bcc 0x0201094c
@@ -96,6 +97,7 @@ ITEM_DESCR:
 ;Import the font data
 FONT_LC08:
   .import "data/font_data.bin"
+.endarea
 
 ;Fix "Liruka Village" not being centered
 .org 0x020f7268
