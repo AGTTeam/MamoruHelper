@@ -42,6 +42,7 @@ NAMEPLATE_VWF:
 
 ;Center the enemy nameplates when using ASCII
 NAMEPLATE_CENTER:
+  push {r0}
   ;The current character is in r5, and r5 is used for the width
   ldr r0,=FONT_LC08
   add r0,r0,r5
@@ -52,7 +53,7 @@ NAMEPLATE_CENTER:
   addge r0,r0,0x5E
   ;Set the width
   ldrb r5,[r0]
-  mov r0,0x0
+  pop {r0}
   b NAMEPLATE_CENTER_RETURN
   .pool
 
