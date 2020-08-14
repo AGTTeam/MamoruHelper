@@ -5,7 +5,7 @@
 ;Fix the game to run on no$gba
 ;More info: https://github.com/Arisotura/melonDS/issues/559
 .org 0x020e5614
-.area 0x1A0
+.area 0x1B0
   MEMSET_HACK:
   ;Original jump
   bcc 0x0201094c
@@ -27,10 +27,10 @@ NAMEPLATE_VWF:
   ldr r0,=FONT_LC08
   add r0,r0,r9
   sub r0,r0,0x20
-  ;Check what font we're using and add 0x5E for LC10
-  ldr r2,[r13,0x2c]
+  ;Check what font we're using and add 0x5f for LC10
+  ldr r2,[r13,0x2a]
   cmp r2,0xa
-  addge r0,r0,0x5E
+  addge r0,r0,0x5f
   ;Set r0 to the character spacing
   ldrb r0,[r0]
   strb r0,[r13,0x28]
@@ -47,10 +47,10 @@ NAMEPLATE_CENTER:
   ldr r0,=FONT_LC08
   add r0,r0,r5
   sub r0,r0,0x20
-  ;Check what font we're using and add 0x5E for LC10
-  ldr r5,[r13,0x2c]
+  ;Check what font we're using and add 0x5f for LC10
+  ldr r5,[r13,0x2a]
   cmp r5,0xa
-  addge r0,r0,0x5E
+  addge r0,r0,0x5f
   ;Set the width
   ldrb r5,[r0]
   pop {r0}
