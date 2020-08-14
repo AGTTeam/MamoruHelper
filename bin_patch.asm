@@ -28,7 +28,7 @@ NAMEPLATE_VWF:
   add r0,r0,r9
   sub r0,r0,0x20
   ;Check what font we're using and add 0x5f for LC10
-  ldr r2,[r13,0x2a]
+  ldr r2,[r13,0x30]
   cmp r2,0xa
   addge r0,r0,0x5f
   ;Set r0 to the character spacing
@@ -48,7 +48,7 @@ NAMEPLATE_CENTER:
   add r0,r0,r5
   sub r0,r0,0x20
   ;Check what font we're using and add 0x5f for LC10
-  ldr r5,[r13,0x2a]
+  ldr r5,[r13,0x30]
   cmp r5,0xa
   addge r0,r0,0x5f
   ;Set the width
