@@ -103,7 +103,7 @@ FONT_LC08:
 ;Fix "Liruka Village" not being centered
 .org 0x020f7268
   ;Original: .sjis "　　　　　　%s"
-  .sjis "　　　　 %s　"
+  .sjis "　　　　　%s　"
 
 ;Extend "Permanent Skill" menu header
 .org 0x2085438
