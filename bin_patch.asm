@@ -1,11 +1,11 @@
 ﻿.nds
 
 .open "data/repack/arm9.bin",0x02000000
-;Using free space from 0x020E5614 to 0x020E5907 for custom code
+;Using free space from 0x20e55e4 to 0x020e5907 for custom code
 ;Fix the game to run on no$gba
 ;More info: https://github.com/Arisotura/melonDS/issues/559
-.org 0x020e5614
-.area 0x1B0
+.org 0x20e55e4
+.area 0x1E0
   MEMSET_HACK:
   ;Original jump
   bcc 0x0201094c
@@ -73,27 +73,52 @@ PERMANENT_SKILL:
   b PERMANENT_SKILL_RETURN
 
 ;Move the 2nd item description line down if there's a line break in the first one
+;r0 = line number
+;r1/2 = temp registers
+;r3 = line spacing (parameter and return)
+;r12 = line pointer
+THREE_LINES:
+  push {lr}
+  cmp r0,0x00
+  bne @@end
+  mov r3,0x0c
+  mov r1,0x0
+  @@loop:
+  ldrb r2,[r12,r1]
+  cmp r2,0x0a
+  beq @@lb
+  cmp r2,0x0
+  beq @@end
+  add r1,r1,0x1
+  b @@loop
+  @@lb:
+  mov r3,0x14
+  @@end:
+  pop {pc}
+
 ;r7 = number of the line
 ;r10 = line spacing, default is 0x0c
 ;r12 = pointer to the string
 ITEM_DESCR:
-  cmp r7,0x00
-  bne ITEM_DESCR_END
-  mov r10,0x0c
-  mov r1,0x0
-  ITEM_DESCR_LOOP:
-  ldrb r2,[r12,r1]
-  cmp r2,0x0a
-  beq ITEM_DESCR_LB
-  cmp r2,0x0
-  beq ITEM_DESCR_END
-  add r1,r1,0x1
-  b ITEM_DESCR_LOOP
-  ITEM_DESCR_LB:
-  mov r10,0x14
-  ITEM_DESCR_END:
   mov r1,r4
-  b ITEM_DESCR_RETURN
+  push {lr,r0-r3}
+  mov r0,r7
+  mov r3,r10
+  bl THREE_LINES
+  mov r10,r3
+  pop {pc,r0-r3}
+
+;r9 = number of the line
+;r4 = line spacing, default is 0x0c
+;r12 = pointer to the string
+ITEM_COMPARE:
+  mov r1,r5
+  push {lr,r0-r3}
+  mov r0,r9
+  mov r3,r4
+  bl THREE_LINES
+  mov r4,r3
+  pop {pc,r0-r3}
 
 ;Import the font data
 FONT_LC08:
@@ -133,7 +158,12 @@ FONT_LC08:
   DEFAULT_KEYBOARD_RETURN:
 .org 0x020784d8
   ;Original: mov r1,r4
-  b ITEM_DESCR
-  ITEM_DESCR_RETURN:
+  bl ITEM_DESCR
+.org 0x2079ec0
+  ;Original: mov r1,r5
+  bl ITEM_COMPARE
+.org 0x02078058
+  ;Original: mov r1,r5
+  bl ITEM_COMPARE
 
 .close
