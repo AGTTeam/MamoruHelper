@@ -140,6 +140,31 @@ FONT_LC08:
   b PERMANENT_SKILL
   PERMANENT_SKILL_RETURN:
 
+;Tweak quest reward spacing
+;x position
+.org 0x0205aba8
+  ;Original: mov r2,0x6e
+  mov r2,0x7e
+;Number position
+.org 0x0205abdc
+  ;Original: mov r2,0x7d
+  mov r2,0x8d
+
+;Tweak item shop spacing
+.org 0x0207a59c
+  ;Original: mov r2,0x5e
+  mov r2,0x6e
+
+;Tweak blacksmith spacing
+.org 0x02079194
+  ;Original: mov r2,0x5e
+  mov r2,0x6e
+
+;Tweak blacksmith details spacing
+.org 0x02079020
+  ;Original: mov r2,0x5e
+  mov r2,0x6e
+
 ;Inject custom code
 .org 0x020108c0
   b MEMSET_HACK
