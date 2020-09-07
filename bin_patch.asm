@@ -1,11 +1,11 @@
 ﻿.nds
 
 .open "data/repack/arm9.bin",0x02000000
-;Using free space from 0x20e55e4 to 0x020e5907 for custom code
+;Using free space up to 0x020e5908 for custom code
 ;Fix the game to run on no$gba
 ;More info: https://github.com/Arisotura/melonDS/issues/559
-.org 0x20e55e4
-.area 0x1E0
+.org 0x020e5734
+.area 0x1d4
   MEMSET_HACK:
   ;Original jump
   bcc 0x0201094c
@@ -78,7 +78,6 @@ PERMANENT_SKILL:
 ;r3 = line spacing (parameter and return)
 ;r12 = line pointer
 THREE_LINES:
-  push {lr}
   cmp r0,0x00
   bne @@end
   mov r3,0x0c
@@ -94,7 +93,7 @@ THREE_LINES:
   @@lb:
   mov r3,0x14
   @@end:
-  pop {pc}
+  bx lr
 
 ;r7 = number of the line
 ;r10 = line spacing, default is 0x0c
