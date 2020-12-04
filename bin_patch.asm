@@ -164,6 +164,11 @@ FONT_LC08:
   ;Original: mov r2,0x5e
   mov r2,0x6e
 
+;Tweak nameplace centering
+.org 0x0205d628
+  ;Original: mov r2,0x40
+  mov r2,0x3a
+
 ;Inject custom code
 .org 0x020108c0
   b MEMSET_HACK
