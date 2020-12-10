@@ -1,4 +1,5 @@
 # Mamoru Helper
+This repository is for the tool used to translate the game. If you're looking for the English patch, click [here](http://www.romhacking.net/translations/5796/).  
 ## Setup
 Create a "data" folder and copy the rom of the game as "mamoru.nds" in it.  
 (Optional, only for PSD export) Install [ImageMagick](https://imagemagick.org/script/download.php#windows), check "Add application directory to your system path" while installing.  
