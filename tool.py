@@ -3,8 +3,8 @@ import click
 import game
 from hacktools import common, nds, nitro
 
-version = "0.6.3"
-romfile = "data/mamoru.nds"
+version = "0.7.0"
+romfile = "mamoru.nds"
 rompatch = "data/mamoru_patched.nds"
 infolder = "data/extract/"
 replacefolder = "data/replace/"
@@ -29,7 +29,7 @@ def extract(rom, img):
 
 
 @common.cli.command()
-@click.option("--no-rom", is_flag=True, default=False)
+@click.option("--no-rom", is_flag=True, default=False, hidden=True)
 @click.option("--mtrans", is_flag=True, default=False)
 @click.option("--img", is_flag=True, default=False)
 def repack(no_rom, mtrans, img):
@@ -53,15 +53,11 @@ def repack(no_rom, mtrans, img):
         nds.repackRom(romfile, rompatch, outfolder, patchfile)
 
 
-@common.cli.command()
+@common.cli.command(hidden=True)
 def patchdump():
     patchfile = "data/bad_to_good.xdelta"
     common.xdeltaPatch(patchfile, romfile.replace(".nds", "_bad.nds"), romfile)
 
 
 if __name__ == "__main__":
-    click.echo("MamoruHelper version " + version)
-    if not os.path.isdir("data"):
-        common.logError("data folder not found.")
-        quit()
-    common.cli()
+    common.setupTool("MamoruHelper", version, "data", romfile, 0xecf425b6)
