@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-hacktools = {extras = ["armips", "graphics", "nds", "xdelta"], version = "*"}
+hacktools = {extras = ["armips", "cli", "graphics", "nds", "xdelta"], version = "*"}
 
 [requires]
 python_version = "3"
