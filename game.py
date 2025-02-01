@@ -24,6 +24,6 @@ def readImage(infolder, file, extension):
     return palettes, image, map, cell, width, height, mapfile, cellfile
 
 
-def writeImage(file, image, map, cell, width, height):
+def writeImage(workfolder, infolder, outfolder, file, image, palettes, map, cell, width, height):
     transptile = "SN/CMN" in file
-    return image, map, cell, width, height, transptile
+    return image, palettes, map, cell, width, height, transptile
